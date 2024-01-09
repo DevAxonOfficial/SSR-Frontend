@@ -7,18 +7,20 @@ import Contact_map from '../../components/sections/contact_map';
 import Footer from '../../components/global/footer';
 
 import Transition from '../../components/transition';
-import { gsap } from "gsap";
 import { useEffect , useRef } from 'react';
-import { Power3, Power4 } from "gsap";
+
 
 export default function Contact_page() {
-
-
   let body = useRef(null);
-  var tl_1 = gsap.timeline()
+
+  let gsap, Power4;
 
   useEffect(() => {
+    import("gsap/dist/gsap").then(modules => {
+    gsap = modules.gsap;
+    Power4 = modules.Power4;
 
+    var tl_1 = gsap.timeline()
     // Page Transition Code
 
     tl_1.to(body,{
@@ -33,8 +35,9 @@ export default function Contact_page() {
         pointerEvents: 'none'
       });
     }
+  });
 
-  })
+  }, []);
 
   return (
     <>

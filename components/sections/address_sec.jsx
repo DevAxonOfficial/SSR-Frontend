@@ -3,16 +3,10 @@ import '../../assets/css/intg_solution.css'
 import '../../assets/css/contact.css'
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap/dist/gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 import Contact_form from '../sections/contact_form';
 
 export default function Address_sec() {
-
-    // gloabl line GSAP
-    gsap.registerPlugin(ScrollTrigger);
-
     // Heading text animation variable
     const txt_animate = useRef(null);
 
@@ -32,48 +26,52 @@ export default function Address_sec() {
             });
     };
 
+    let gsap
     useEffect(() => {
+        import("gsap/dist/gsap").then(modules => {
+            gsap = modules.gsap;
 
-        // Heading text animation code
-        gsap.to("#txt_animate", {
-            y: 0,
-            duration: 1.3,
-            ease: "power4.out",
-            delay: 0.3,
-            scrollTrigger: {
-                trigger: "#txt_animate",
-                markers: false
-            }
-        });
+            // gloabl line GSAP
+            new Promise((res) => res(import('gsap/dist/ScrollTrigger'))).then(scrollModule => gsap.registerPlugin(scrollModule.ScrollTrigger))
 
-        // Image animation code
-        gsap.to("#img_animation", {
-            xPercent: 100,
-            duration: 1,
-            ease: "linear",
-            delay: 0.8,
-            scrollTrigger: {
-                trigger: "#img_animation",
-                markers: false
-            }
-        });
+            // Heading text animation code
+            gsap.to("#txt_animate", {
+                y: 0,
+                duration: 1.3,
+                ease: "power4.out",
+                delay: 0.3,
+                scrollTrigger: {
+                    trigger: "#txt_animate",
+                    markers: false
+                }
+            });
 
-        // Para animation code
-        gsap.to("#para_aniamtion", {
-            opacity: 1,
-            duration: 1.5,
-            ease: "linear",
-            delay: 0.9,
-            scrollTrigger: {
-                trigger: "#para_aniamtion",
-                markers: false
-            }
-        });
+            // Image animation code
+            gsap.to("#img_animation", {
+                xPercent: 100,
+                duration: 1,
+                ease: "linear",
+                delay: 0.8,
+                scrollTrigger: {
+                    trigger: "#img_animation",
+                    markers: false
+                }
+            });
 
+            // Para animation code
+            gsap.to("#para_aniamtion", {
+                opacity: 1,
+                duration: 1.5,
+                ease: "linear",
+                delay: 0.9,
+                scrollTrigger: {
+                    trigger: "#para_aniamtion",
+                    markers: false
+                }
+            });
 
-
-
-        attemptPlay();
+            attemptPlay();
+        })
     }, []);
 
     return (

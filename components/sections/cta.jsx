@@ -1,46 +1,48 @@
 import React from 'react'
 import '../../assets/css/cta.css';
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap/dist/gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 import sldrRightArrow from '../../assets/img/svg/sldr_right_arrow_blk.svg';
 
 export default function Cta() {
-
-    // gloabl line GSAP
-    gsap.registerPlugin(ScrollTrigger);
-
     // Heading text animation variable
     const txt_animate_p2 = useRef(null);
 
     // Para animation variable
     const cta_aniamtion = useRef(null);
 
+    let gsap
     useEffect(() => {
+        import("gsap/dist/gsap").then(modules => {
+            gsap = modules.gsap;
 
-        // Heading text animation code
-        gsap.to("#txt_animate_p2", {
-            y:0,
-            duration: 1.3,
-            ease: "power4.out",
-            delay: 0.3,
-            scrollTrigger: {
-                trigger: "#txt_animate_p2",
-                markers: false
-            }
-        });
+            // gloabl line GSAP
+            new Promise((res) => res(import('gsap/dist/ScrollTrigger'))).then(scrollModule => gsap.registerPlugin(scrollModule.ScrollTrigger))
 
-        // Para animation code
-        gsap.to("#cta_aniamtion", {
-            opacity:1,
-            duration: 1.5,
-            ease: "linear",
-            delay: 0.9,
-            scrollTrigger: {
-                trigger: "#cta_aniamtion",
-                markers: false
-            }
+            // Heading text animation code
+            gsap.to("#txt_animate_p2", {
+                y:0,
+                duration: 1.3,
+                ease: "power4.out",
+                delay: 0.3,
+                scrollTrigger: {
+                    trigger: "#txt_animate_p2",
+                    markers: false
+                }
+            });
+
+            // Para animation code
+            gsap.to("#cta_aniamtion", {
+                opacity:1,
+                duration: 1.5,
+                ease: "linear",
+                delay: 0.9,
+                scrollTrigger: {
+                    trigger: "#cta_aniamtion",
+                    markers: false
+                }
+            });
+
         });
 
     }, []);

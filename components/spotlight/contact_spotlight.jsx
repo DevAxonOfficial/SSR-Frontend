@@ -1,36 +1,36 @@
 import React from 'react'
 import '../../assets/css/park_inside_spotlight.css';
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap/dist/gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 import spotlight from '../../assets/img/contact_spotlight.jpg'
 import arrow from '../../assets/img/home_sldr_arrow.png'
 
 export default function Contact_spotlight() {
-
-
     // gloabl line GSAP
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Heading text animation variable
     const spot_hd_anmt_cont = useRef(null);
 
+    // Heading text animation variable
+    let gsap;
     useEffect(() => {
+        import("gsap/dist/gsap").then(modules => {
+            gsap = modules.gsap;
+
+            new Promise((res) => res(import('gsap/dist/ScrollTrigger'))).then(scrollModule => gsap.registerPlugin(scrollModule.ScrollTrigger))
+            gsap.to("#spot_hd_anmt_cont", {
+                y:0,
+                duration: 1.3,
+                ease: "power4.out",
+                delay: 0.7,
+                scrollTrigger: {
+                    trigger: "#spot_hd_anmt_cont",
+                    markers: false
+                }
+            });
+        })
 
         // Heading text animation code
-        gsap.to("#spot_hd_anmt_cont", {
-            y:0,
-            duration: 1.3,
-            ease: "power4.out",
-            delay: 0.7,
-            scrollTrigger: {
-                trigger: "#spot_hd_anmt_cont",
-                markers: false
-            }
-        });
 
-}, []);
+    }, []);
 
   return (
     <>
